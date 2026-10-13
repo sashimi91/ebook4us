@@ -23,10 +23,10 @@
     var nextBtn = document.getElementById("next-btn");
 
     var bgColor = isDark ? "#1e1e1e" : "#f5f0e6";
-    var controlBg = isDark ? "#2d2d2d" : "#f8fafc";
+    var controlBg = isDark ? "#2d2d2d" : "#efe6d7";
     var borderColor = isDark ? "#3f3f46" : "#e2e8f0";
     var textColor = isDark ? "#e2e8f0" : "#334155";
-    var inputBg = isDark ? "#3f3f46" : "#ffffff";
+    var inputBg = isDark ? "#3f3f46" : "#f5f0e6";
     var inputBorder = isDark ? "#52525b" : "#cbd5e1";
 
     if (container) {
@@ -46,34 +46,6 @@
     if (progressText) progressText.style.color = isDark ? "#94a3b8" : "#475569";
     if (pageDisplay) pageDisplay.style.color = isDark ? "#94a3b8" : "#475569";
     
-// 🌟 Dùng Hook để tiêm thẳng CSS vào từng chương sách (bất chấp CSS gốc của file epub)
-  if (typeof rendition !== "undefined" && rendition) {
-    rendition.hooks.content.register(function(contents) {
-      var doc = contents.document;
-      
-      // Kiểm tra xem đã chèn style chưa để tránh bị lặp
-      if (!doc.getElementById("custom-epub-style")) {
-        var style = doc.createElement("style");
-        style.id = "custom-epub-style";
-        style.innerHTML = `
-          body {
-            background-color: ${bgColor} !important;
-            color: ${textColor} !important;
-          }
-          /* Ép các thành phần bên trong suốt nền để lộ màu nền vàng nhạt */
-          p, span, div, h1, h2, h3, h4, h5, h6 {
-            background-color: transparent !important;
-            color: ${textColor} !important;
-          }
-        `;
-        doc.head.appendChild(style);
-      }
-    });
-    
-    // Yêu cầu render lại giao diện ngay lập tức để nhận style mới
-    rendition.timer && rendition.timer.update ? rendition.timer.update() : rendition.display();
-  }
-
     [fontSelect, tocSelect, zoomIn, zoomOut, prevBtn, nextBtn].forEach(function (el) {
       if (el) {
         el.style.backgroundColor = inputBg;
@@ -102,8 +74,8 @@
                 "a, a * { color: #60a5fa !important; }" +
                 "img, svg { max-width: 100% !important; height: auto !important; }"
               : "@page { margin: 0 !important; }" +
-                "html, body { background-color: #ffffff !important; color: #000000 !important; line-height: 1.6 !important; margin: 0 !important; padding: 0 !important; }" +
-                "html *, body * { color: #000000 !important; background-color: transparent !important; line-height: 1.6 !important; margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }" +
+                "html, body { background-color: #f5f0e6 !important; color: #1e293b !important; line-height: 1.6 !important; margin: 0 !important; padding: 0 !important; }" +
+                "html *, body * { color: #1e293b !important; background-color: transparent !important; line-height: 1.6 !important; margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }" +
                 "img, svg { max-width: 100% !important; height: auto !important; }";
           }
         }
