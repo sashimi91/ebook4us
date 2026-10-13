@@ -45,15 +45,34 @@
 
     if (progressText) progressText.style.color = isDark ? "#94a3b8" : "#475569";
     if (pageDisplay) pageDisplay.style.color = isDark ? "#94a3b8" : "#475569";
-    // 🌟 Change backgroud iframe of ePub.js
-    if (typeof rendition !== "undefined" && rendition) {
-      rendition.themes.default({
-        "body": {
-          "background": bgColor + " !important",
-          "color": textColor + " !important"
-        }
-      });
-    }
+    
+// 🌟 Dùng Hook để tiêm thẳng CSS vào từng chương sách (bất chấp CSS gốc của file epub)
+  if (typeof rendition !== "undefined" && rendition) {
+    rendition.hooks.content.register(function(contents) {
+      var doc = contents.document;
+      
+      // Kiểm tra xem đã chèn style chưa để tránh bị lặp
+      if (!doc.getElementById("custom-epub-style")) {
+        var style = doc.createElement("style");
+        style.id = "custom-epub-style";
+        style.innerHTML = `
+          body {
+            background-color: ${bgColor} !important;
+            color: ${textColor} !important;
+          }
+          /* Ép các thành phần bên trong suốt nền để lộ màu nền vàng nhạt */
+          p, span, div, h1, h2, h3, h4, h5, h6 {
+            background-color: transparent !important;
+            color: ${textColor} !important;
+          }
+        `;
+        doc.head.appendChild(style);
+      }
+    });
+    
+    // Yêu cầu render lại giao diện ngay lập tức để nhận style mới
+    rendition.timer && rendition.timer.update ? rendition.timer.update() : rendition.display();
+  }
 
     [fontSelect, tocSelect, zoomIn, zoomOut, prevBtn, nextBtn].forEach(function (el) {
       if (el) {
