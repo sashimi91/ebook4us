@@ -22,7 +22,7 @@
     var prevBtn = document.getElementById("prev-btn");
     var nextBtn = document.getElementById("next-btn");
 
-    var bgColor = isDark ? "#1e1e1e" : "#ffffff";
+    var bgColor = isDark ? "#1e1e1e" : "#f5f0e6";
     var controlBg = isDark ? "#2d2d2d" : "#f8fafc";
     var borderColor = isDark ? "#3f3f46" : "#e2e8f0";
     var textColor = isDark ? "#e2e8f0" : "#334155";
