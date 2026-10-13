@@ -45,6 +45,15 @@
 
     if (progressText) progressText.style.color = isDark ? "#94a3b8" : "#475569";
     if (pageDisplay) pageDisplay.style.color = isDark ? "#94a3b8" : "#475569";
+    // 🌟 Change backgroud iframe of ePub.js
+    if (typeof rendition !== "undefined" && rendition) {
+      rendition.themes.default({
+        "body": {
+          "background": bgColor + " !important",
+          "color": textColor + " !important"
+        }
+      });
+    }
 
     [fontSelect, tocSelect, zoomIn, zoomOut, prevBtn, nextBtn].forEach(function (el) {
       if (el) {
