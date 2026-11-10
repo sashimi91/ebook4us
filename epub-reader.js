@@ -110,11 +110,6 @@
     var fullTarget = targetPath + (anchor ? '#' + anchor : '');
 
     rendition.display(fullTarget).then(function () {
-        setTimeout(function() {
-        var loc = rendition.currentLocation();
-        if (loc && loc.start) updateProgress(loc);
-      }, 100);
-      
       if (anchor) {
         setTimeout(function () {
           try {
@@ -327,7 +322,7 @@
 
     // Update progress & sync TOC (auto-adapts for short & long books)
     function updateProgress(location) {
-      if (!location || !location.start || isNavigating) return;
+      if (!location || !location.start) return;
 
       // 1. Sync chapter dropdown (toc-select)
       var select = document.getElementById("toc-select");
