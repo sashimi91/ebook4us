@@ -110,6 +110,11 @@
     var fullTarget = targetPath + (anchor ? '#' + anchor : '');
 
     rendition.display(fullTarget).then(function () {
+        setTimeout(function() {
+        var loc = rendition.currentLocation();
+        if (loc && loc.start) updateProgress(loc);
+      }, 100);
+      
       if (anchor) {
         setTimeout(function () {
           try {
