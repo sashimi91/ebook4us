@@ -420,7 +420,7 @@
           } else {
             themeIcon.innerHTML = iconMoon;
             themeText.innerText = "Dark mode";
-            themeBtn.style.backgroundColor = "#ffffff";
+            themeBtn.style.backgroundColor = "#f5f0e6";
             themeBtn.style.color = "#334155";
             themeBtn.style.borderColor = "#cbd5e1";
           }
