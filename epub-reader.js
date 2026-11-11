@@ -54,33 +54,36 @@
       }
     });
 
-    var iframes = document.querySelectorAll("#epub-viewer iframe");
-    iframes.forEach(function (iframe) {
-      try {
-        var doc = iframe.contentDocument || (iframe.contentWindow && iframe.contentWindow.document);
-        if (doc) {
-          var target = doc.head || doc.body || doc.documentElement;
-          if (target) {
-            var styleEl = doc.getElementById("epub-override-css");
-            if (!styleEl) {
-              styleEl = doc.createElement("style");
-              styleEl.id = "epub-override-css";
-              target.appendChild(styleEl);
-            }
-            styleEl.textContent = isDark
-              ? "@page { margin: 0 !important; }" +
-                "html, body { background-color: #1e1e1e !important; color: #e2e8f0 !important; line-height: 1.6 !important; margin: 0 !important; padding: 0 !important; }" +
-                "html *, body * { color: #e2e8f0 !important; background-color: transparent !important; line-height: 1.6 !important; margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }" +
-                "a, a * { color: #60a5fa !important; }" +
-                "img, svg { max-width: 100% !important; height: auto !important; }"
-              : "@page { margin: 0 !important; }" +
-                "html, body { background-color: #f5f0e6 !important; color: #1e293b !important; line-height: 1.6 !important; margin: 0 !important; padding: 0 !important; }" +
-                "html *, body * { color: #1e293b !important; background-color: transparent !important; line-height: 1.6 !important; margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }" +
-                "img, svg { max-width: 100% !important; height: auto !important; }";
-          }
+    if (rendition) {
+      rendition.themes.default({
+        "html, body": {
+          "background-color": bgColor + " !important",
+          "color": (isDark ? "#e2e8f0" : "#1e293b") + " !important",
+          "line-height": "1.6 !important",
+          "margin": "0 !important",
+          "padding": "0 !important"
+        },
+        "@page": {
+          "margin": "0 !important"
+        },
+        "body *": {
+          "color": (isDark ? "#e2e8f0" : "#1e293b") + " !important",
+          "background-color": "transparent !important",
+          "line-height": "1.6 !important",
+          "margin-left": "0 !important",
+          "margin-right": "0 !important",
+          "padding-left": "0 !important",
+          "padding-right": "0 !important"
+        },
+        "a, a *": {
+          "color": (isDark ? "#60a5fa" : "#2563eb") + " !important"
+        },
+        "img, svg": {
+          "max-width": "100% !important",
+          "height": "auto !important"
         }
-      } catch (e) {}
-    });
+      });
+    }
   };
 
   // 2. Smart chapter navigation (prevents queue lock on iOS WebKit)
@@ -213,7 +216,7 @@
     rendition = book.renderTo("epub-viewer", {
       width: "100%",
       height: "100%",
-      spread: "always"
+      spread: "auto"
     });
 
     window.currentRendition = rendition;
