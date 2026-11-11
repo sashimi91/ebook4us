@@ -5,7 +5,7 @@
   let bookmarkKey = "";
   let isNavigating = false;
 
-  // 1. Dark/Light mode toggle function
+  // 1. Dark/Light mode toggle function.
   window.applyEpubTheme = function (isDark) {
     if (typeof isDark !== "boolean") isDark = isInternalDark;
 
