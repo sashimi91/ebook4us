@@ -113,6 +113,14 @@
     var fullTarget = targetPath + (anchor ? '#' + anchor : '');
 
     rendition.display(fullTarget).then(function () {
+        setTimeout(function() {
+        if (rendition) {
+          if (rendition.manager && rendition.manager.clear) {
+            rendition.manager.clear(); 
+          }
+          rendition.resize(); 
+        }
+      }, 500);
       if (anchor) {
         setTimeout(function () {
           try {
@@ -136,10 +144,7 @@
         rendition.display(matchedItem.href);
       }
     }).finally(function () {
-      setTimeout(function () { isNavigating = false; }, 300);
-     setTimeout(function () {
-      if (rendition) rendition.resize();
-    }, 150);
+      setTimeout(function () { isNavigating = false; }, 600); 
     });
   }
 
@@ -249,9 +254,6 @@
 
       var doc = contents.document || (contents.window && contents.window.document);
       if (!doc) return;
-
-      window.applyEpubTheme(isInternalDark);
-
       doc.addEventListener('contextmenu', function (e) { e.preventDefault(); e.stopPropagation(); return false; }, true);
       doc.addEventListener('copy', function (e) { e.preventDefault(); e.stopPropagation(); return false; }, true);
       doc.addEventListener('keydown', function (e) {
