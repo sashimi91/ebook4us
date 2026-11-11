@@ -372,7 +372,6 @@
 
     rendition.on("relocated", function (location) {
       updateProgress(location);
-      window.applyEpubTheme(isInternalDark);
 
       if (location && location.start && location.start.cfi) {
         try { localStorage.setItem(bookmarkKey, location.start.cfi); } catch (err) {}
