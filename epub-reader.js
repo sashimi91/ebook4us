@@ -112,40 +112,13 @@
     var targetPath = matchedItem ? matchedItem.href : cleanPath;
     var fullTarget = targetPath + (anchor ? '#' + anchor : '');
 
-    rendition.display(fullTarget).then(function () {
-        setTimeout(function() {
-        if (rendition) {
-          if (rendition.manager && rendition.manager.clear) {
-            rendition.manager.clear(); 
-          }
-          rendition.resize(); 
-        }
-      }, 500);
-      if (anchor) {
-        setTimeout(function () {
-          try {
-            var contents = rendition.getContents();
-            if (contents && contents.length > 0) {
-              var doc = contents[0].document || contents[0].window.document;
-              if (doc) {
-                var el = doc.getElementById(anchor) || doc.querySelector('[name="' + anchor + '"]');
-                if (el) {
-                  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }
-            }
-          } catch (e) {
-            console.warn("Cannot scroll to anchor on iOS:", e);
-          }
-        }, 100);
-      }
-    }).catch(function () {
+    rendition.display(fullTarget).catch(function () {
       if (matchedItem) {
         rendition.display(matchedItem.href);
       }
     }).finally(function () {
-      setTimeout(function () { isNavigating = false; }, 600); 
-    });
+  setTimeout(function () { isNavigating = false; }, 300);
+      });
   }
 
   // 3. Fullscreen (custom CSS)
@@ -254,6 +227,9 @@
 
       var doc = contents.document || (contents.window && contents.window.document);
       if (!doc) return;
+
+      window.applyEpubTheme(isInternalDark);
+
       doc.addEventListener('contextmenu', function (e) { e.preventDefault(); e.stopPropagation(); return false; }, true);
       doc.addEventListener('copy', function (e) { e.preventDefault(); e.stopPropagation(); return false; }, true);
       doc.addEventListener('keydown', function (e) {
