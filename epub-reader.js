@@ -137,6 +137,9 @@
       }
     }).finally(function () {
       setTimeout(function () { isNavigating = false; }, 300);
+     setTimeout(function () {
+      if (rendition) rendition.resize();
+    }, 150);
     });
   }
 
